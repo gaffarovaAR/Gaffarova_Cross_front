@@ -1,0 +1,22 @@
+<h2 mat-dialog-title class="center">Assignment with ID {{data}}</h2>
+
+<div mat-dialog-content *ngIf="assignment$ | async as assignment; else loader">
+    <form *ngIf="assignment !== null; else empty">
+        <mat-card>Assignment' text: {{assignment.text}}<br>
+        Assignment' deadline: {{assignment.deadline}}<br>
+        Assignment' executors: {{assignment.executorsList}}<br>
+        Assignment' done: {{assignment.done}}<br>
+        Assignment' overdue: {{assignment.is_Overdue}}<br>
+        Assignment' last change: {{assignment.dateLastChange}}</mat-card>
+    </form>
+       
+    <ng-template #empty>
+        <div class="center">This assignment was not found</div>
+    </ng-template>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

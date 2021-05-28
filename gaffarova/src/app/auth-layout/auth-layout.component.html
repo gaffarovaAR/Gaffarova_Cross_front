@@ -1,0 +1,22 @@
+<nav>
+    <div class="nav-wrapper" style="background-color: #E57373;">
+        <a routerLink="/" class="brand-logo">
+            <mat-icon svgIcon="logo" aria-hidden="false" aria-label="Logo"></mat-icon>
+            <div class="log-div">Gaffarova Albina</div>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li routerLinkActive="active">
+                <a routerLink="/login" style="font-size: 20px;">Log In</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="auth-block">
+    <router-outlet></router-outlet>
+</div>
+
+<footer style="margin-left: 3%; margin-right: 3%; width: 94%; margin-top: 12%; position: fixed;">
+    <hr> 
+    <p style="text-align: center;">© 2021 Gaffarova Albina</p>
+</footer>

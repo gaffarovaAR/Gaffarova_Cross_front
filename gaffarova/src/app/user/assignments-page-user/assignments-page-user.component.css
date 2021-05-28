@@ -1,0 +1,28 @@
+.mat-fab .mat-button-wrapper .mybut {
+    padding: 0px 0;
+    display: inline-block;
+    line-height: 24px;
+}
+
+.mat-open {
+    background-color: rgb(223, 223, 223);
+    color: #fff;
+}
+
+.mat-edit {
+    background-color: rgb(196, 193, 159);
+    color: #fff;
+}
+
+.mat-delete {
+    background-color: rgb(255, 130, 92);
+    color: #fff;
+}
+
+.green {
+    background: rgba(68, 255, 193, 0.568) !important;
+}
+
+.red {
+    background: rgba(255, 109, 64, 0.568) !important;
+}

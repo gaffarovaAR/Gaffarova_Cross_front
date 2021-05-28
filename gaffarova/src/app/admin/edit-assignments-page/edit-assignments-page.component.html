@@ -1,0 +1,32 @@
+<form class="card" [formGroup]="form" (ngSubmit)="edit()">
+    <div class="card-content">
+        <span class="card-title">Edit assignment with ID = {{assignment.id}}</span>
+              
+        <div class="input-field">
+            <input formControlName="text" id="text" type="text" [ngClass]="{'invalid': form.get('text').invalid && form.get('text').touched}" [(ngModel)]="assignment.text">
+            <label for="text" class="active">Text</label> 
+            <span class="helper-text red-text" *ngIf="form.get('text').invalid && form.get('text').touched">
+                <span *ngIf="form.get('text').errors['required']">The text of the assignment must not be empty</span>
+            </span>
+        </div> 
+
+        <div class="input-field">
+            <input formControlName="deadline" id="deadline" type="date" [ngClass]="{'invalid': form.get('deadline').invalid && form.get('deadline').touched}" [(ngModel)]="assignment.deadline">
+            <label for="deadline" class="active">Deadline</label> 
+            <span class="helper-text red-text" *ngIf="form.get('deadline').invalid && form.get('deadline').touched">
+                <span *ngIf="form.get('deadline').errors['required']">The deadline of the assignment must not be empty</span>
+            </span>
+        </div> 
+
+        <mat-form-field appearance="fill">
+            <mat-label>Executors</mat-label>
+            <mat-select formControlName="executors" id="executors" multiple>
+              <mat-option *ngFor="let executor of executorsList" [value]="executor">{{executor.thirstName}} {{executor.secondName}} {{executor.thirdName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</form>
+<div class="card-action" style=" text-align: right;">
+    <button (click)="edit()" type="submit" class="modal-action btn waves-effect" [disabled]="form.invalid || form.disabled"  style="display: inline-block;">Edit</button>
+    <button (click)="cancel()" class="modal-action btn waves-effect" [disabled]="false" style="display: inline-block;margin-left: 1em;">Cancel</button>
+</div>

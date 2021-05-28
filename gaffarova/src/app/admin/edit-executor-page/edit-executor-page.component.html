@@ -1,0 +1,57 @@
+<form class="card" [formGroup]="form" (ngSubmit)="edit()">
+    <div class="card-content">
+        <span class="card-title">Edit executor with ID = {{data}}</span>
+              
+        <div class="input-field">
+            <input formControlName="thirstName" id="thirstName" type="text" [ngClass]="{'invalid': form.get('thirstName').invalid && form.get('thirstName').touched}" [(ngModel)]="executor.thirstName">
+            <label for="thirstName" class="active">Thirst name</label> 
+            <span class="helper-text red-text" *ngIf="form.get('thirstName').invalid && form.get('thirstName').touched">
+                <span *ngIf="form.get('thirstName').errors['required']">Thirst name must not be empty</span>
+            </span>
+        </div> 
+
+        <div class="input-field">
+            <input formControlName="secondName" id="secondName" type="text" [ngClass]="{'invalid': form.get('secondName').invalid && form.get('secondName').touched}" [(ngModel)]="executor.secondName">
+            <label for="secondName" class="active">Second name</label> 
+            <span class="helper-text red-text" *ngIf="form.get('secondName').invalid && form.get('secondName').touched">
+                <span *ngIf="form.get('secondName').errors['required']">Second name must not be empty</span>
+            </span>
+        </div> 
+
+        <div class="input-field">
+            <input formControlName="thirdName" id="thirdName" type="text" [ngClass]="{'invalid': form.get('thirdName').invalid && form.get('thirdName').touched}" [(ngModel)]="executor.thirdName">
+            <label for="thirdName" class="active">Third name</label> 
+            <span class="helper-text red-text" *ngIf="form.get('thirdName').invalid && form.get('thirdName').touched">
+                <span *ngIf="form.get('thirdName').errors['required']">Third name must not be empty</span>
+            </span>
+        </div> 
+
+        <div class="input-field">
+            <input formControlName="position" id="position" type="text" [ngClass]="{'invalid': form.get('position').invalid && form.get('position').touched}" [(ngModel)]="executor.position">
+            <label for="position" class="active">Position</label> 
+            <span class="helper-text red-text" *ngIf="form.get('position').invalid && form.get('position').touched">
+                <span *ngIf="form.get('position').errors['required']">Position must not be empty</span>
+            </span>
+        </div>
+
+        <div class="input-field">
+            <input formControlName="login" id="login" type="text" [ngClass]="{'invalid': form.get('login').invalid && form.get('login').touched}">
+            <label for="login" class="active">Login</label> 
+            <span class="helper-text red-text" *ngIf="form.get('login').invalid && form.get('login').touched">
+                <span *ngIf="form.get('login').errors['required']">Login must not be empty</span>
+            </span>
+        </div>
+
+        <div class="input-field">
+            <input formControlName="password" id="password" type="text" [ngClass]="{'invalid': form.get('password').invalid && form.get('password').touched}">
+            <label for="password" class="active">Password</label> 
+            <span class="helper-text red-text" *ngIf="form.get('password').invalid && form.get('password').touched">
+                <span *ngIf="form.get('password').errors['required']">Password must not be empty</span>
+            </span>
+        </div>
+    </div>
+</form>
+<div class="card-action" style=" text-align: right;">
+    <button (click)="edit()" type="submit" class="modal-action btn waves-effect" [disabled]="form.invalid || form.disabled"  style="display: inline-block;">Edit</button>
+    <button (click)="cancel()" class="modal-action btn waves-effect" [disabled]="false" style="display: inline-block;margin-left: 1em;">Cancel</button>
+</div>

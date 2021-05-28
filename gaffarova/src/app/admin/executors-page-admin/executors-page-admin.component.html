@@ -1,0 +1,122 @@
+<div class="page-title">
+    <h4>Executors' list</h4>
+    <div style=" text-align: right;">
+        <button class="btn btn-small grey darken-1" style="display: inline-block;" (click)="add()">Add</button>
+        <button class="btn btn-small js-filter tooltipped" data-tooltip="Open filter" (click)="visible = !visible" style="display: inline-block;margin-left: 1em;">
+            <i class="material-icons">filter_list</i>
+        </button>
+    </div>
+</div>
+
+<div class="filter js-filter-block" [ngClass]="{'hide': visible}">
+    <form [formGroup]="form" (ngSubmit)="filter()">
+        <div class="fr">
+            <div class="col order">
+                <div class="input-field inline order-position-input">
+                    <input type="number" id="fId" min="1" formControlName="fId" width=50px>
+                    <label for="fId">Id</label>
+                </div>
+            </div>
+            <div class="col order" style="width: 400px;">
+                <div class="input-field inline order-position-input" style="width: 200px;">
+                    <input type="text" id="fThirstName" formControlName="fThirstName">
+                    <label for="fThirstName">Thirst name</label>
+                </div>
+            </div>
+            <div class="col order" style="width: 400px;">
+                <div class="input-field inline order-position-input" style="width: 200px;">
+                    <input type="text" id="fSecondName" formControlName="fSecondName">
+                    <label for="fSecondName">Second name</label>
+                </div>
+            </div>
+            <div class="col order" style="width: 400px;">
+                <div class="input-field inline order-position-input" style="width: 200px;">
+                    <input type="text" id="fThirdName" formControlName="fThirdName">
+                    <label for="fThirdName">Third name</label>
+                </div>
+            </div>
+            <div class="col order" style="width: 400px;">
+                <div class="input-field inline order-position-input" style="width: 200px;">
+                    <input type="text" id="fPosition" formControlName="fPosition">
+                    <label for="fPosition">Position</label>
+                </div>
+            </div>
+            <div class="col order" style="width: 200px; margin-left: 0.3em;">
+                <div class="input-field inline order-position-input" style="width: 200px;">
+                    <input type="number" id="fAss" min="1" formControlName="fAss">
+                    <label for="fAss">Assignments' amount</label>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <button class="btn waves-effect wavers-light btn-small" (click)="filter()">Apply the filter</button>
+    <button class="btn btn-small grey darken-1" (click)="refresh();" style="margin-left: 1em;">Cancel the filter</button>
+</div>
+
+<div class="row" *ngIf="executors$ | async as executors; else loader;">
+    <table mat-table [dataSource]="sort(executors)" class="mat-elevation-z2" *ngIf="executors.length !== 0; else empty">
+
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;"><a (click)="dirId = !dirId; isSortId = true; isSortAss = false; ngOnInit();">Id</a></th>
+            <td mat-cell *matCellDef="let executor">{{ executor.id }}</td>
+        </ng-container>
+        <ng-container matColumnDef="ThirstName">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Thirst name</th>
+            <td mat-cell *matCellDef="let executor">{{ executor.thirstName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="SecondName">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Second name</th>
+            <td mat-cell *matCellDef="let executor">{{ executor.secondName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="ThirdName">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Third name</th>
+            <td mat-cell *matCellDef="let executor">{{ executor.thirdName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Position">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Position</th>
+            <td mat-cell *matCellDef="let executor">{{ executor.position }}</td>
+        </ng-container>
+        <ng-container matColumnDef="AmountAssig">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;"><a (click)="dirAss = !dirAss; isSortAss = true; isSortId = false; ngOnInit();">Assignments' amount</a></th>
+            <td mat-cell *matCellDef="let executor">{{ executor.amountAssig }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Open">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Open</th>
+            <td mat-cell *matCellDef="let executor">
+                <button mat-fab color="open" aria-label="Open" (click)="open(executor.id)">
+                    <mat-icon svgIcon="open" aria-hidden="false" aria-label="Open"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Edit">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Edit</th>
+            <td mat-cell *matCellDef="let executor">
+                <button mat-fab color="edit" aria-label="Edit" (click)="edit(executor.id)">
+                    <mat-icon svgIcon="edit" aria-hidden="false" aria-label="Edit"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Delete</th>
+            <td mat-cell *matCellDef="let executor">
+                <button mat-fab color="delete" aria-label="Delete" (click)="delete(executor.id)">
+                    <mat-icon svgIcon="delete" aria-hidden="false" aria-label="Delete"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let executor; columns: displayedColumns"></tr> 
+    
+    </table>
+</div>
+
+<ng-template #empty>
+    <div class="center">Assignments' list is empty</div>
+</ng-template>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+
+<router-outlet></router-outlet>

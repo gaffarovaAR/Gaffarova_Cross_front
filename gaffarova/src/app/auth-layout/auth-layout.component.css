@@ -1,0 +1,17 @@
+.mat-icon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    fill: currentColor;
+    height: 40px;
+    width: 40px;
+    margin-top: 10px;
+}
+
+.log-div {
+    display: inline-block;
+    position: absolute;
+    margin-top: 3px;
+    margin-left: 10px;
+    width: 500px;
+}
+  

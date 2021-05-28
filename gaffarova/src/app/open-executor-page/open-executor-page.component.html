@@ -1,0 +1,34 @@
+<h2 mat-dialog-title class="center">Executor with ID {{data}}</h2>
+
+<div mat-dialog-content *ngIf="executor$ | async as executor; else loader">
+    <form *ngIf="executor !== null; else empty">
+        <mat-card style="font-size: 17px;">Thirst name: {{executor.thirstName}}<br>
+        Second name: {{executor.secondName}}<br>
+        Third name: {{executor.thirdName}}<br>
+        Position: {{executor.position}}<br>
+        Done {{done}} assignments out of {{executor.amountAssig}}<br>
+        Overdue assignments: {{over}}<br>
+        Assignments awaiting confirmation: {{wait}}<br>
+        </mat-card>
+    </form>
+
+    <!-- <div style="padding-top: 5%; padding-left: 5%;">
+        <h6>Список задач</h6>
+        <mat-list role="list">
+            <mat-list-item role="listitem" *ngFor="let miss of employer.missions; index as i" 
+            [ngClass]="{green: miss.isComplete, red: !miss.isComplete}">
+                Задача №{{i}} (ID = {{miss.id}}): {{miss.missionTask}}
+            </mat-list-item>
+        </mat-list>
+    </div> -->
+       
+    <ng-template #empty>
+        <div class="center">This executor was not found</div>
+    </ng-template>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

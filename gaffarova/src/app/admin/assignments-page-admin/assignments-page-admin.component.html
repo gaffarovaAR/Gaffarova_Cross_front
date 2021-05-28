@@ -1,0 +1,104 @@
+<div class="page-title">
+    <h4>Assignments' list</h4>
+    <div style=" text-align: right;">
+        <button class="btn btn-small grey darken-1" style="display: inline-block;" (click)="add()">Add</button>
+        <button class="btn btn-small js-filter tooltipped" data-tooltip="Open filter" (click)="visible = !visible" style="display: inline-block;margin-left: 1em;">
+            <i class="material-icons">filter_list</i>
+        </button>
+    </div>
+</div>
+
+<div class="filter js-filter-block" [ngClass]="{'hide': visible}">
+    <form [formGroup]="form" (ngSubmit)="filter()">
+        <div class="fr">
+            <div class="col order">
+                <div class="input-field inline order-position-input">
+                    <input type="number" id="fId" min="1" formControlName="fId">
+                    <label for="fId">Id</label>
+                </div>
+            </div>
+            <div class="col order" style="width: 400px;">
+                <div class="input-field inline order-position-input" style="width: 400px;">
+                    <input type="text" id="fText" formControlName="fText">
+                    <label for="fText">Text</label>
+                </div>
+            </div>
+            <div class="col order" style="width: 400px; margin-left: 0.3em;">
+                <div class="input-field inline order-position-input" style="width: 400px;">
+                    <input type="text" id="fEx" formControlName="fEx">
+                    <label for="fEx">Executors</label>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <button class="btn waves-effect wavers-light btn-small" (click)="filter()">Apply the filter</button>
+    <button class="btn btn-small grey darken-1" (click)="refresh()" style="margin-left: 1em;">Cancel the filter</button>
+</div>
+
+<div class="row" *ngIf="assignments$ | async as assignments; else loader;">
+    <table mat-table [dataSource]="sort(assignments)" class="mat-elevation-z2" *ngIf="assignments.length !== 0; else empty">
+
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;"><a (click)="dirId = !dirId; isSortId = true; isSortCom = false; ngOnInit();">ID</a></th>
+            <td mat-cell *matCellDef="let assignment">{{ assignment.id }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Text">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;"><a (click)="dirCom = !dirCom; isSortId = false; isSortCom = true; ngOnInit();">Text</a></th>
+            <td mat-cell *matCellDef="let assignment" width=250px>{{ assignment.text }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Deadline">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Deadline</th>
+            <td mat-cell *matCellDef="let assignment">{{ assignment.deadline }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Executors">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Executors</th>
+            <td mat-cell *matCellDef="let assignment" width=200px>{{ assignment.executorsList }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Overdue">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Overdue</th>
+            <td mat-cell *matCellDef="let assignment" width=100px>{{ assignment.is_Overdue }}</td>
+        </ng-container>
+        <ng-container matColumnDef="DateLastChange">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">DateLastChange</th>
+            <td mat-cell *matCellDef="let assignment" width=100px>{{ assignment.dateLastChange }}</td>
+        </ng-container>
+        <ng-container matColumnDef="Open">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Open</th>
+            <td mat-cell *matCellDef="let assignment">
+                <button mat-fab color="open" aria-label="Open" (click)="open(assignment.id)">
+                    <mat-icon svgIcon="open" aria-hidden="false" aria-label="Open"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Edit">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Edit</th>
+            <td mat-cell *matCellDef="let assignment">
+                <button mat-fab color="edit" aria-label="Edit" (click)="edit(assignment.id)">
+                    <mat-icon svgIcon="edit" aria-hidden="false" aria-label="Edit"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Delete</th>
+            <td mat-cell *matCellDef="let assignment">
+                <button mat-fab color="delete" aria-label="Delete" (click)="delete(assignment.id)">
+                    <mat-icon svgIcon="delete" aria-hidden="false" aria-label="Delete"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let assignment; columns: displayedColumns" [ngClass]="{'green': isDone(assignment), 'red': !isDone(assignment)}"></tr> 
+    
+    </table>
+</div>
+
+<ng-template #empty>
+    <div class="center">Assignments' list is empty</div>
+</ng-template>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+
+<router-outlet></router-outlet>

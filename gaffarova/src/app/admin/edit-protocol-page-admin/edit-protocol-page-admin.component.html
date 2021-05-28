@@ -1,0 +1,39 @@
+<form class="card" [formGroup]="form" (ngSubmit)="edit()">
+    <div class="card-content">
+        <span class="card-title">Edit protocol with ID = {{data}}</span>
+              
+        <div class="input-field">
+            <input formControlName="name" id="name" type="text" [ngClass]="{'invalid': form.get('name').invalid && form.get('name').touched}" [(ngModel)]="protocol.name">
+            <label for="name" class="active">Name</label> 
+            <span class="helper-text red-text" *ngIf="form.get('name').invalid && form.get('name').touched">
+                <span *ngIf="form.get('name').errors['required']">The name of the assignment must not be empty</span>
+            </span>
+        </div> 
+
+        <mat-form-field appearance="fill">
+            <mat-label>Head</mat-label>
+            <mat-select formControlName="head" id="head">
+              <mat-option *ngFor="let executor of executorsList" [value]="executor">{{executor.thirstName}} {{executor.secondName}} {{executor.thirdName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="input-field">
+            <input formControlName="date" id="date" type="date" [ngClass]="{'invalid': form.get('date').invalid && form.get('date').touched}" [(ngModel)]="protocol.date">
+            <label for="date" class="active">Date</label> 
+            <span class="helper-text red-text" *ngIf="form.get('date').invalid && form.get('date').touched">
+                <span *ngIf="form.get('date').errors['required']">The date of the assignment must not be empty</span>
+            </span>
+        </div> 
+
+        <mat-form-field appearance="fill">
+            <mat-label>Assignments</mat-label>
+            <mat-select formControlName="assignments" id="assignments" multiple>
+              <mat-option *ngFor="let assignment of assignmentsList" [value]="assignment">ID = {{assignment.id}}: {{assignment.text}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</form>
+<div class="card-action" style=" text-align: right;">
+    <button (click)="edit()" type="submit" class="modal-action btn waves-effect" [disabled]="form.invalid || form.disabled"  style="display: inline-block;">Edit</button>
+    <button (click)="cancel()" class="modal-action btn waves-effect" [disabled]="false" style="display: inline-block;margin-left: 1em;">Cancel</button>
+</div>

@@ -1,0 +1,65 @@
+<h2 mat-dialog-title class="center">Protocol with ID {{data}}</h2>
+
+<div mat-dialog-content *ngIf="protocol$ | async as protocol; else loader">
+    <form *ngIf="protocol !== null; else empty">
+        <mat-card style="font-size: 17px;">Name: {{protocol.name}}<br>
+        Head: {{protocol.head}}<br>
+        Date: {{protocol.date}}<br>
+        Assignments' amount: {{protocol.amountAssig}}
+
+        <div class="row" *ngIf="assignments$ | async as assignments; else loader;">
+            <table mat-table [dataSource]="assignments" class="mat-elevation-z2" *ngIf="assignments.length !== 0; else empty">
+        
+                <ng-container matColumnDef="Id">
+                    <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Id</th>
+                    <td mat-cell *matCellDef="let assignment">{{ assignment.id }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Text">
+                    <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Text</th>
+                    <td mat-cell *matCellDef="let assignment" width=150px>{{ assignment.text }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Executors">
+                    <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Executors</th>
+                    <td mat-cell *matCellDef="let assignment" width=150px>{{ assignment.executorsList }}</td>
+                </ng-container>
+                <ng-container matColumnDef="Deadline">
+                    <th mat-header-cell *matHeaderCellDef style="font-size: 17px;">Deadline</th>
+                    <td mat-cell *matCellDef="let assignment" width=150px>{{ assignment.deadline }}</td>
+                </ng-container>
+                            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let assignment; columns: displayedColumns"></tr> 
+            
+            </table>
+        </div>
+        
+        <ng-template #empty>
+            <div class="center">Assignments' list is empty</div>
+        </ng-template>
+        <ng-template #loader>
+            <app-loader></app-loader>
+        </ng-template>    
+
+        </mat-card>
+    </form>
+
+    <!-- <div style="padding-top: 5%; padding-left: 5%;">
+        <h6>Список задач</h6>
+        <mat-list role="list">
+            <mat-list-item role="listitem" *ngFor="let miss of employer.missions; index as i" 
+            [ngClass]="{green: miss.isComplete, red: !miss.isComplete}">
+                Задача №{{i}} (ID = {{miss.id}}): {{miss.missionTask}}
+            </mat-list-item>
+        </mat-list>
+    </div> -->
+       
+    <ng-template #empty>
+        <div class="center">This protocol was not found</div>
+    </ng-template>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
